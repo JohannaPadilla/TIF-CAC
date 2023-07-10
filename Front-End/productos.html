@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Listar Productos</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <script src="https://kit.fontawesome.com/1616891057.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      .btn-animate {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+
+      .btn-animate:hover {
+        transform: scale(1.1);
+        /* Aumenta el tamaño del botón */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        /* Agrega una sombra */
+      }
+    </style>
+  </head>
+
+  <body class="bg-dark bg-opacity">
+    <header id="header">
+      <!-- Coloca la barra de navegación aquí -->
+    </header>
+    <main>
+      <div id="app" class="container">
+        <h1 class="text-light text-center mt-4">Productos</h1>
+        <br />
+        <!-- <a class="btn btn-primary" href="producto-create.html">Nuevo</a> -->
+        <!-- <a class="btn btn-primary btn-animate" href="producto-create.html">Nuevo</a> -->
+        <div class="row m-0 mb-4">
+          <a
+            class="btn btn-success animate__animated animate__heartBeat btn-animate col-2 me-5 text-uppercase font-weight-bold"
+            href="producto-create.html"
+            > <i class="fa-solid fa-plus" style="color: #ffffff;"></i>  <strong>Nuevo</strong></a
+          >
+          <input
+            class="form-control col text-center"
+            type="text"
+            v-model="terminoBusqueda"
+            placeholder="Buscar por nombre del producto"
+            @input="filtrarItems"
+          />
+        </div>
+        <div v-if="error">
+          <p>Lo sentimos, ha ocurrido un error.</p>
+        </div>
+
+        <div v-else>
+          <section v-if="cargando">
+            <div class="spinner-border"></div>
+            <p>Cargando...</p>
+          </section>
+          <section v-else>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              <div class="col" v-for="producto in filteredItems">
+                <div class="card bg-opacity-25">
+                  <img
+                    width="150"
+                    height="400"
+                    class="card-img-top"
+                    :src="producto.imagen"
+                    :alt="producto.nombre"
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">{{producto.nombre}}</h5>
+                    <p class="card-text"><strong>ID producto: </strong>{{producto.id}}</p>
+                    <p class="card-text"><strong>Precio: </strong>{{producto.precio}}</p>
+                    <p class="card-text"><strong>Stock: </strong>{{producto.stock}}</p>
+                  </div>
+
+                  <div class="row m-1 mb-4">
+                    <!-- Botón para editar el producto -->
+                    <a
+                      class="btn btn-warning col me-2 ms-2"
+                      :href="'producto-update.html?id='+ producto.id"
+                      ><i class="fa-solid fa-pen-to-square" style="color: #000000;"></i> <strong>Editar</strong></a
+                    >
+                    <!-- Botón para eliminar el producto -->
+                    <button
+                      type="button"
+                      class="btn btn-danger col me-2 ms-2"
+                      v-on:click="eliminar(producto.id)"
+                    ><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> <strong>Eliminar</strong></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <!-- Coloca aquí el contenido del pie de página -->
+    </footer>
+    <!-- Enlace de Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/main.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--Enlace de VUE-->
+    <script src="js/productos.js"></script>
+  </body>
+</html>
